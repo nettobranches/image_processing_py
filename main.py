@@ -107,7 +107,7 @@ def average():
 
     for iw in range(2,w-2):
         for ih in range(2,h-2):
-            nugray[ih-1][iw-1] = avg(gray, ih-1,iw-1)
+            nugray[ih-1][iw-1] = avg(gray, ih-1, iw-1)
 
     cv2.imwrite(imgpng, img)
     cv2.imwrite(nupng, nugray)
@@ -126,7 +126,7 @@ def convolution():
 
     for iw in range(2,w-2):
         for ih in range(2,h-2):
-            nugray[ih-1][iw-1] = conv(gray, ih-1,iw-1)
+            nugray[ih-1][iw-1] = cnvl(gray, ih-1, iw-1)
 
     cv2.imwrite(imgpng, img)
     cv2.imwrite(nupng, nugray)
@@ -144,14 +144,20 @@ def avg(mtrx, h, w):
         mtrx[h][w-1], mtrx[h][w], mtrx[h][w+1],
         mtrx[h+1][w-1], mtrx[h+1][w], mtrx[h+1][w+1] ])
 
-def conv(mtrx, h, w):
-    # H = numpy.array([[
-    #     mtrx[h-1][w-1], mtrx[h-1][w], mtrx[h-1][w+1], 
-    #     mtrx[h][w-1], mtrx[h][w], mtrx[h][w+1],
-    #     mtrx[h+1][w-1], mtrx[h+1][w], mtrx[h+1][w+1] ]])
-    # J = numpy.array([[7, 8], [9, 10]])
-    # res  = numpy.multiply(x,y))
-    res = 0
+def cnvl(mtrx, h, w):
+    kernel = np.array([[1,0,-1], 
+            [0,0,0],
+            [-1,0,1]])
+    H = np.array([[
+        mtrx[h-1][w-1], mtrx[h-1][w], mtrx[h-1][w+1], 
+        mtrx[h][w-1], mtrx[h][w], mtrx[h][w+1],
+        mtrx[h+1][w-1], mtrx[h+1][w], mtrx[h+1][w+1] ]])
+    J = np.array([[kernel[0][0]], [kernel[0][1]], [kernel[0][2]],
+        [kernel[1][0]], [kernel[1][1]], [kernel[0][2]],
+        [kernel[2][0]], [kernel[2][1]], [kernel[2][2]]])
+    # print('H, J', H, J)
+    res  = np.dot(H,J)
+    # res = 0
     return res
 
 if __name__ == '__main__':
