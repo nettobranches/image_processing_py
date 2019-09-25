@@ -126,7 +126,7 @@ def convolution():
 
     for iw in range(2,w-2):
         for ih in range(2,h-2):
-            nugray[ih-1][iw-1] = gray[ih-1][iw-1]
+            nugray[ih-1][iw-1] = conv(gray, ih-1,iw-1)
 
     cv2.imwrite(imgpng, img)
     cv2.imwrite(nupng, nugray)
@@ -144,6 +144,15 @@ def avg(mtrx, h, w):
         mtrx[h][w-1], mtrx[h][w], mtrx[h][w+1],
         mtrx[h+1][w-1], mtrx[h+1][w], mtrx[h+1][w+1] ])
 
+def conv(mtrx, h, w):
+    # H = numpy.array([[
+    #     mtrx[h-1][w-1], mtrx[h-1][w], mtrx[h-1][w+1], 
+    #     mtrx[h][w-1], mtrx[h][w], mtrx[h][w+1],
+    #     mtrx[h+1][w-1], mtrx[h+1][w], mtrx[h+1][w+1] ]])
+    # J = numpy.array([[7, 8], [9, 10]])
+    # res  = numpy.multiply(x,y))
+    res = 0
+    return res
 
 if __name__ == '__main__':
     app.run()
